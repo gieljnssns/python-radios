@@ -220,6 +220,89 @@ class RadioBrowser:
 
         return parse_obj_as(list[Language], languages)
 
+    async def search(
+        self,
+        *,
+        # filter_by: FilterBy | None = None,
+        # filter_term: str | None = None,
+        hide_broken: bool = False,
+        limit: int = 100000,
+        offset: int = 0,
+        order: Order = Order.NAME,
+        reverse: bool = False,
+        name: str | None = None,
+        name_exact: bool = False,
+        country: str | None = None,
+        country_exact: bool = False,
+        countrycode: str | None = None,
+        state: str | None = None,
+        state_exact: bool = False,
+        language: str | None = None,
+        language_exact: bool = False,
+        tag: str | None = None,
+        tag_exact: bool = False,
+        codec: str | None = None,
+        bitrate_min: int = 0,
+        bitrate_max: int = 1000000,
+    ) -> list[Station]:
+        """Get list of radio stations.
+
+        Args:
+            hide_broken: Do not count broken stations.
+            limit: Limit the number of results.
+            offset: Offset the results.
+            order: Order the results.
+            reverse: Reverse the order of the results.
+            name: Search by name.
+            name_exact: Search by exact name.
+            country: Search by country.
+            country_exact: Search by exact country.
+            countrycode:  Search by exact countrycode.
+            state:  Search by state.
+            state_exact:  Search by exact state.
+            language:  Search by language.
+            language_exact:  Search by exact language.
+            tag:  Search by tag.
+            tag_exact:  Search by exact tag.
+            codec:  Search by codec.
+            bitrate_min:  Search by minimum bitrate.
+            bitrate_max:  Search by maximum bitrate.
+
+        Returns:
+            A list of Station objects.
+        """
+        uri = "stations/search"
+        # if filter_by is not None:
+        #     uri = f"{uri}/{filter_by.value}"
+        #     if filter_term is not None:
+        #         uri = f"{uri}/{filter_term}"
+
+        stations = await self._request(
+            uri,
+            params={
+                "hidebroken": hide_broken,
+                "offset": offset,
+                "order": order.value,
+                "reverse": reverse,
+                "limit": limit,
+                "name": name,
+                "name_exact": name_exact,
+                "country": country,
+                "country_exact": country_exact,
+                "countrycode": countrycode,
+                "state": state,
+                "state_exact": state_exact,
+                "language": language,
+                "language_exact": language_exact,
+                "tag": tag,
+                "tag_exact": tag_exact,
+                "codec": codec,
+                "bitrate_min": bitrate_min,
+                "bitrate_max": bitrate_max,
+            },
+        )
+        return parse_obj_as(list[Station], stations)
+
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
 
