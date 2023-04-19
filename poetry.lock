@@ -803,14 +803,14 @@ test = ["pytest"]
 
 [[package]]
 name = "flake8-comprehensions"
-version = "3.11.1"
+version = "3.12.0"
 description = "A flake8 plugin to help you write better list/set/dict comprehensions."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "flake8_comprehensions-3.11.1-py3-none-any.whl", hash = "sha256:d1e27f4099900c61fb156cbb7461e0e49702385fd388326e1a892d04b069c48e"},
-    {file = "flake8_comprehensions-3.11.1.tar.gz", hash = "sha256:31d6386c125e325d7c84290d71f5354295dbbf5a8d47259708fa349aa0969523"},
+    {file = "flake8_comprehensions-3.12.0-py3-none-any.whl", hash = "sha256:013234637ec7dfcb7cd2900578fb53c512f81db909cefe371c019232695c362d"},
+    {file = "flake8_comprehensions-3.12.0.tar.gz", hash = "sha256:419ef1a6e8de929203791a5e8ff5e3906caeba13eb3290eebdbf88a9078d502e"},
 ]
 
 [package.dependencies]
@@ -1676,18 +1676,17 @@ diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pytest"
-version = "7.2.2"
+version = "7.3.1"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pytest-7.2.2-py3-none-any.whl", hash = "sha256:130328f552dcfac0b1cec75c12e3f005619dc5f874f0a06e8ff7263f0ee6225e"},
-    {file = "pytest-7.2.2.tar.gz", hash = "sha256:c99ab0c73aceb050f68929bc93af19ab6db0558791c6a0715723abe9d0ade9d4"},
+    {file = "pytest-7.3.1-py3-none-any.whl", hash = "sha256:3799fa815351fea3a5e96ac7e503a96fa51cc9942c3753cda7651b93c1cfa362"},
+    {file = "pytest-7.3.1.tar.gz", hash = "sha256:434afafd78b1d78ed0addf160ad2b77a30d35d4bdf8af234fe621919d9ed15e3"},
 ]
 
 [package.dependencies]
-attrs = ">=19.2.0"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
 iniconfig = "*"
@@ -1696,7 +1695,7 @@ pluggy = ">=0.12,<2.0"
 tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
-testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
+testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
 name = "pytest-asyncio"
@@ -2304,4 +2303,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "301169b115166f8152ec0b4079693a321a4fe10a8a1b24916cc77d7c5c4077e6"
+content-hash = "9d6f926162542c47cd8b2e97ce9b0c4c66a487effb5d796d88bae399f99ef902"
