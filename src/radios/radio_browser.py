@@ -61,7 +61,7 @@ class RadioBrowser:
             Radio Browser API.
 
         Raises:
-            RadioBrowserConnectionError: An error occurred while communitcation with
+            RadioBrowserConnectionError: An error occurred while communication with
                 the Radio Browser API.
             RadioBrowserConnectionTimeoutError: A timeout occurred while communicating
                 with the Radio Browser API.
@@ -223,8 +223,8 @@ class RadioBrowser:
     async def search(
         self,
         *,
-        # filter_by: FilterBy | None = None,
-        # filter_term: str | None = None,
+        filter_by: FilterBy | None = None,
+        filter_term: str | None = None,
         hide_broken: bool = False,
         limit: int = 100000,
         offset: int = 0,
@@ -232,16 +232,11 @@ class RadioBrowser:
         reverse: bool = False,
         name: str | None = None,
         name_exact: bool = False,
-        country: str | None = None,
+        country: str | None = "",
         country_exact: bool = False,
-        countrycode: str | None = None,
-        state: str | None = None,
         state_exact: bool = False,
-        language: str | None = None,
         language_exact: bool = False,
-        tag: str | None = None,
         tag_exact: bool = False,
-        codec: str | None = None,
         bitrate_min: int = 0,
         bitrate_max: int = 1000000,
     ) -> list[Station]:
@@ -257,14 +252,9 @@ class RadioBrowser:
             name_exact: Search by exact name.
             country: Search by country.
             country_exact: Search by exact country.
-            countrycode:  Search by exact countrycode.
-            state:  Search by state.
             state_exact:  Search by exact state.
-            language:  Search by language.
             language_exact:  Search by exact language.
-            tag:  Search by tag.
             tag_exact:  Search by exact tag.
-            codec:  Search by codec.
             bitrate_min:  Search by minimum bitrate.
             bitrate_max:  Search by maximum bitrate.
 
@@ -272,10 +262,10 @@ class RadioBrowser:
             A list of Station objects.
         """
         uri = "stations/search"
-        # if filter_by is not None:
-        #     uri = f"{uri}/{filter_by.value}"
-        #     if filter_term is not None:
-        #         uri = f"{uri}/{filter_term}"
+        if filter_by is not None:
+            uri = f"{uri}/{filter_by.value}"
+            if filter_term is not None:
+                uri = f"{uri}/{filter_term}"
 
         stations = await self._request(
             uri,
@@ -289,14 +279,9 @@ class RadioBrowser:
                 "name_exact": name_exact,
                 "country": country,
                 "country_exact": country_exact,
-                "countrycode": countrycode,
-                "state": state,
                 "state_exact": state_exact,
-                "language": language,
                 "language_exact": language_exact,
-                "tag": tag,
                 "tag_exact": tag_exact,
-                "codec": codec,
                 "bitrate_min": bitrate_min,
                 "bitrate_max": bitrate_max,
             },
