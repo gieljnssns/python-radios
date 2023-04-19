@@ -47,21 +47,17 @@ class RadioBrowser:
         params: dict[str, Any] | None = None,
     ) -> Any:
         """Handle a request to the Radio Browser API.
-
         A generic method for sending/handling HTTP requests done against
         the Radio Browser API.
-
         Args:
             uri: Request URI, for example `stats`.
             method: HTTP method to use for the request.E.g., "GET" or "POST".
             params: Dictionary of data to send to the Radio Browser API.
-
         Returns:
             A Python dictionary (JSON decoded) with the response from the
             Radio Browser API.
-
         Raises:
-            RadioBrowserConnectionError: An error occurred while communitcation with
+            RadioBrowserConnectionError: An error occurred while communication with
                 the Radio Browser API.
             RadioBrowserConnectionTimeoutError: A timeout occurred while communicating
                 with the Radio Browser API.
@@ -117,7 +113,6 @@ class RadioBrowser:
 
     async def stats(self) -> Stats:
         """Get Radio Browser service stats.
-
         Returns:
             A Stats object, with information about the Radio Browser API.
         """
@@ -126,12 +121,10 @@ class RadioBrowser:
 
     async def station_click(self, *, uuid: str) -> None:
         """Register click on a station.
-
         Increase the click count of a station by one. This should be called
         every time when a user starts playing a stream to mark the stream more
         popular than others. Every call to this endpoint from the same IP
         address and for the same station only gets counted once per day.
-
         Args:
             uuid: UUID of the station.
         """
@@ -147,14 +140,12 @@ class RadioBrowser:
         reverse: bool = False,
     ) -> list[Country]:
         """Get list of available countries.
-
         Args:
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
             order: Order the results.
             reverse: Reverse the order of the results.
-
         Returns:
             A Stats object, with information about the Radio Browser API.
         """
@@ -193,14 +184,12 @@ class RadioBrowser:
         reverse: bool = False,
     ) -> list[Language]:
         """Get list of available languages.
-
         Args:
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
             order: Order the results.
             reverse: Reverse the order of the results.
-
         Returns:
             A list of Language objects.
         """
@@ -220,12 +209,78 @@ class RadioBrowser:
 
         return parse_obj_as(list[Language], languages)
 
+    async def search(
+        self,
+        *,
+        filter_by: FilterBy | None = None,
+        filter_term: str | None = None,
+        hide_broken: bool = False,
+        limit: int = 100000,
+        offset: int = 0,
+        order: Order = Order.NAME,
+        reverse: bool = False,
+        name: str | None = None,
+        name_exact: bool = False,
+        country: str | None = "",
+        country_exact: bool = False,
+        state_exact: bool = False,
+        language_exact: bool = False,
+        tag_exact: bool = False,
+        bitrate_min: int = 0,
+        bitrate_max: int = 1000000,
+    ) -> list[Station]:
+        """Get list of radio stations.
+        Args:
+            filter_by: Filter the results by a specific field.
+            filter_term: Search term to filter the results.
+            hide_broken: Do not count broken stations.
+            limit: Limit the number of results.
+            offset: Offset the results.
+            order: Order the results.
+            reverse: Reverse the order of the results.
+            name: Search by name.
+            name_exact: Search by exact name.
+            country: Search by country.
+            country_exact: Search by exact country.
+            state_exact:  Search by exact state.
+            language_exact:  Search by exact language.
+            tag_exact:  Search by exact tag.
+            bitrate_min:  Search by minimum bitrate.
+            bitrate_max:  Search by maximum bitrate.
+        Returns:
+            A list of Station objects.
+        """
+        uri = "stations/search"
+        if filter_by is not None:
+            uri = f"{uri}/{filter_by.value}"
+            if filter_term is not None:
+                uri = f"{uri}/{filter_term}"
+
+        stations = await self._request(
+            uri,
+            params={
+                "hidebroken": hide_broken,
+                "offset": offset,
+                "order": order.value,
+                "reverse": reverse,
+                "limit": limit,
+                "name": name,
+                "name_exact": name_exact,
+                "country": country,
+                "country_exact": country_exact,
+                "state_exact": state_exact,
+                "language_exact": language_exact,
+                "tag_exact": tag_exact,
+                "bitrate_min": bitrate_min,
+                "bitrate_max": bitrate_max,
+            },
+        )
+        return parse_obj_as(list[Station], stations)
+
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
-
         Args:
             uuid: UUID of the station.
-
         Returns:
             A  Station object if found.
         """
@@ -250,7 +305,6 @@ class RadioBrowser:
         reverse: bool = False,
     ) -> list[Station]:
         """Get list of radio stations.
-
         Args:
             filter_by: Filter the results by a specific field.
             filter_term: Search term to filter the results.
@@ -259,7 +313,6 @@ class RadioBrowser:
             offset: Offset the results.
             order: Order the results.
             reverse: Reverse the order of the results.
-
         Returns:
             A list of Station objects.
         """
@@ -291,14 +344,12 @@ class RadioBrowser:
         reverse: bool = False,
     ) -> list[Tag]:
         """Get list of available tags.
-
         Args:
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
             order: Order the results.
             reverse: Reverse the order of the results.
-
         Returns:
             A list of Tags objects.
         """
@@ -321,7 +372,6 @@ class RadioBrowser:
 
     async def __aenter__(self) -> RadioBrowser:
         """Async enter.
-
         Returns:
             The RadioBrowser object.
         """
@@ -329,7 +379,6 @@ class RadioBrowser:
 
     async def __aexit__(self, *_exc_info: Any) -> None:
         """Async exit.
-
         Args:
             _exc_info: Exec type.
         """
