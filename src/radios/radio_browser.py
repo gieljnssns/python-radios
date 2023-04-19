@@ -243,6 +243,8 @@ class RadioBrowser:
         """Get list of radio stations.
 
         Args:
+            filter_by: Filter the results by a specific field.
+            filter_term: Search term to filter the results.
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
